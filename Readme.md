@@ -3,7 +3,8 @@ This code generates the figures in the manuscript "Floral constancy can sustain 
 The original databases of visitation sequences are included in ./Data folder
 To generate the asociated figures, just run the code of each of the files like indicated below.
 
-Figures 3,5, S2-S4 run in python, using the libraries: numpy, pandas, seaborn, matplotlib, json, natsort, scipy and hexalattice. The figure files (Figure_x.py), and helper functions (Functions.py) are included here.
+Figures 3,5, S2-S4 run in python, using the libraries: numpy, pandas, seaborn, matplotlib, json, natsort, scipy, statsmodels, and hexalattice. 
+The figure files (Figure_x.py), and helper functions (Functions.py) are included here.
 
 To generate Figure 3 and Figures S2-S4 run: 
 
