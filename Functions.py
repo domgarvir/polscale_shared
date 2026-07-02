@@ -542,17 +542,6 @@ def create_random_path(N,start=None,species_grid=None,nx=60,ny=60):
 
     return path,visited
 
-#SQUARE LATTICE
-def get_square_neighbors(row, col, nx, ny):
-    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # up, down, left, right
-    neighbors = []
-    for dr, dc in directions:
-        r, c = row + dr, col + dc
-        if 0 <= r < ny and 0 <= c < nx:
-            neighbors.append((r, c))
-    return neighbors
-
-
 
 def grid_to_colors(grid, color_map):
     """Convert a 1D grid of species IDs to a NumPy array of color hex codes."""
@@ -890,6 +879,18 @@ def bounded_ratio_transform(p, min_ratio=0.1, max_ratio=0.9):
 
 def power_law(x, a, b):
     return a * x**b
+
+#get psuedo R2
+def get_pseudo_R2(model, Dvariable):
+    y = model.data[Dvariable]
+    y_hat = model.fits
+    # Total variance (SST)
+    sst = np.var(y, ddof=1)
+    # Explained variance (SSR)
+    ssr = np.var(y_hat, ddof=1)
+    # Pseudo R²
+    r2_pseudo = ssr / sst
+    return r2_pseudo
 
 def split_sequence(pollinator, seq):
     runs = []
