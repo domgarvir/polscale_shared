@@ -9,17 +9,17 @@ from scipy.stats import spearmanr
 
 
 # #load all visitation sequences
-filename="../Data/pollinator_sequences_all_weeks_new.csv"#"./Data/pollinator_sequences_week2.csv"
+filename="./Data/pollinator_sequences_all_weeks_new.csv"#"./Data/pollinator_sequences_week2.csv"
 pol_sequences_df=pd.read_csv(filename)
 sequences=pol_sequences_df["Obs_id"].unique() #these are all possible sequences
 
 #load plant abundances per plot and week
-filename2="../Data/plant_abundances_all_weeks_new.csv"#"./Data/plant_abundances_week2.csv"
+filename2="./Data/plant_abundances_all_weeks_new.csv"#"./Data/plant_abundances_week2.csv"
 abundances_df=pd.read_csv(filename2, index_col=["Plot","Week"])
 abundances_df=abundances_df.sort_index()
 
 #load dataframe with positions in case we need to generate the simulation sequences with the spatial null model
-filename3="../Data/plant_species_coordinates.csv"
+filename3="./Data/plant_species_coordinates.csv"
 coord_df=pd.read_csv(filename3, index_col=0)
 
 #create the species maps and colors for later, such that they are common
@@ -319,7 +319,7 @@ fig.legend( handles=handles,
             fontsize=8, 
             frameon=False)
 
-filename="./Output/Fig_2.pdf"
+filename="./Output/Fig_3.pdf"
 
 # --- Adjust spacing so legend isn’t cut off ---
 plt.subplots_adjust(bottom=0.1)  # increase bottom margin
