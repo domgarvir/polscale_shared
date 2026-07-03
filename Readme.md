@@ -14,7 +14,7 @@ To generate Figure 5 run:
 
 >> python Figure_5.py
 
-Figures 2, 4 and S1, run in R version 4.3.1 (2023-06-16). To generate these figures, run:
+Figures 2, 4, and S1 run in R version 4.3.1 (2023-06-16). To generate these figures, run:
 
 >> r Figures_2_4_S1.R
 
