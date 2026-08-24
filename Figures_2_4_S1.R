@@ -27,7 +27,7 @@ library(ggpubr)
 
 
 ## Characterizing sequences
-pol.data <- read.csv("Data/pollinator_sequences_all_weeks_new.csv", sep=",")
+pol.data <- read.csv("data/pollinator_sequences_all_weeks_new.csv", sep=",")
 
 sum.data <- pol.data %>% dplyr::select(Obs_id, Pollinator_sp) %>% unique()
 pol.yes <- names(which(table(sum.data$Pollinator_sp) > 3))
@@ -126,11 +126,88 @@ fig.2 <- ggplot(test.long,
 ggsave(
   filename = "Figure_2.pdf",
   plot = fig.2,
-  path = "Output",
+  path = "figures",
   width = 8,
   height = 6,
   units = "in"
 )
+
+
+#----
+
+palette <- c(
+  "Andrena_hispania"        = "#1f77b4",
+  "Andrena_sp"    = "#ff7f0e",
+  "Anthophora_sp"          = "#2ca02c",
+  "Apis_mellifera"      = "#d62728",
+  "Bombylius_sp"        = "#9467bd",
+  "Dasypoda_sp"         = "#8c564b",
+  "Eucera_sp"           = "#e377c2",
+  "Lasioglossum_sp"     = "#7f7f7f",
+  "Megachile_sicula"    = "#bcbd22",
+  "Xylocopa_cantabrita" = "#17becf"
+)
+
+sp.labs <- c(
+  "Anthophora_sp"       = "Adi",
+  "Andrena_hispania"   = "Ahi",
+  "Andrena_sp"         = "Afi",
+  "Apis_mellifera"     = "Ame",
+  "Bombylius_sp"       = "Bom",
+  "Dasypoda_sp"        = "Dci",
+  "Eucera_sp"          = "Eru",
+  "Lasioglossum_sp"    = "Las",
+  "Megachile_sicula"   = "Msi",
+  "Xylocopa_cantabrita" = "Xca"
+)
+  
+ggplot(
+  test.long,
+  aes(x = value, fill = Pollinator_sp)
+) +
+  geom_histogram(
+    bins = 15,
+    colour = "white"
+  ) +
+  facet_grid(
+    Pollinator_sp ~ variable,
+    scales = "free",
+    switch = "x",
+    labeller = labeller(
+      variable = labs,
+      Pollinator_sp = sp.labs
+    )
+  ) +
+  scale_fill_manual(values = palette) +
+  scale_y_continuous(
+    breaks = scales::breaks_pretty(),
+    labels = scales::label_number(accuracy = 1)
+  ) +
+  labs(
+    x = NULL,
+    y = "Number of observations"
+  ) +
+  theme_bw() +
+  theme(
+    panel.grid = element_blank(),
+    
+    strip.placement = "outside",
+    strip.background = element_rect(
+      colour = "white",
+      fill = "white"
+    ),
+    strip.text.x = element_text(
+      size = 12,
+      colour = "black"
+    ),
+    strip.text.y = element_text(
+      size = 12,
+      colour = "black"
+    ),
+    axis.text = element_text(size = 10),
+    axis.title.y = element_text(size = 12),
+    legend.position = "none"
+  )
 
 ## Fig. S1
 
@@ -184,7 +261,7 @@ fig.s1 <- ggplot(scores, aes(x = PC1, y = PC2, color = Pollinator_sp)) +
                                     "Lasioglossum sp. (Las)", 
                                     "Eucera rufa (Eru)", 
                                     "Dasypoda cingulata (Dci)", 
-                                    "Bombilius sp. (Bom)", 
+                                    "Bombylius sp. (Bom)", 
                                     "Apis mellifera (Ame)", 
                                     "Anthophora dispar (Adi)", 
                                     "Andrena flavipes (Afl)", 
@@ -193,7 +270,7 @@ fig.s1 <- ggplot(scores, aes(x = PC1, y = PC2, color = Pollinator_sp)) +
 ggsave(
   filename = "Figure_S1.pdf",
   plot = fig.s1,
-  path = "Output",
+  path = "figures",
   width = 8,
   height = 6,
   units = "in"
@@ -201,7 +278,7 @@ ggsave(
 
 # Compute quality and quantity interaction components
 
-pol.data <- read.csv("Data/pollinator_sequences_all_weeks.csv", sep=",")
+pol.data <- read.csv("data/pollinator_sequences_all_weeks.csv", sep=",")
 
 pol.data %>% dplyr::select(Obs_id, Pollinator_sp) %>% 
   unique() %>% group_by(Pollinator_sp) %>% summarise(n=n())
@@ -430,8 +507,10 @@ fig.4a <- ggplot(summary_df, aes(x = total_quantity, y = mean_quality, color=Pol
                     ymax = mean_quality + sd_quality), width = 0.1,
                 position=position_dodge(width=0.5)) +
   geom_point(size = 3, alpha = 0.8, position=position_dodge(width=0.5)) +
-  labs(x = "Pairwise species \ninteraction quantity (QT)", 
-       y = "Pairwise species \ninteraction quality (QL)") +
+  labs(
+    x = bquote("Pairwise species" ~ "interaction quantity (" * Q[T] * ")"),
+    y = bquote("Pairwise species" ~ "interaction quality (" * Q[L] * ")")
+  ) +
   theme_bw() +
   theme(text=element_text(size=17),
         legend.position = "bottom",
@@ -443,7 +522,7 @@ fig.4a <- ggplot(summary_df, aes(x = total_quantity, y = mean_quality, color=Pol
                                     "Lasioglossum sp. (Las)", 
                                     "Eucera rufa (Eru)", 
                                     "Dasypoda cingulata (Dci)", 
-                                    "Bombilius sp. (Bom)", 
+                                    "Bombylius sp. (Bom)", 
                                     "Apis mellifera (Ame)", 
                                     "Anthophora dispar (Adi)", 
                                     "Andrena flavipes (Afl)", 
@@ -454,7 +533,7 @@ cor.test(summary_df$total_quantity, summary_df$mean_quality, method="spearman")
 ggsave(
   filename = "Figure_4.pdf",
   plot = fig.4a,
-  path = "Output",
+  path = "figures",
   width = 8,
   height = 6,
   units = "in"
