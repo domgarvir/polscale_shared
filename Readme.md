@@ -1,4 +1,4 @@
-This repository contains the data and code necessary to generate the results of the manuscript "Floral constancy can sustain plant–pollinator network functioning despite species-level generalization".
+This repository contains the data and code necessary to generate the results of the manuscript "Constant individuals, generalist species: floral constancy sustains plant–pollinator network functioning".
 
 The original dataset of visitation sequences and associated plant data are included in ./Data folder. To generate the results and figures, run the code of each of the files as indicated below.
 
